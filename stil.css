@@ -80,7 +80,8 @@
 }
 
 .sudoku_polje_okvir {
-	border:  solid 1px red;
+	border:  solid 2px #f98;
+	padding: 1px;
 }
 
 .sudoku_polje_kandidat {
@@ -123,6 +124,13 @@
 	color:       #4fa;
 	font-weight: bold;
 }
+
+.sudoku_polje_kandidat_solver_3 {
+	background:  #4a8;
+	color:       #fff;
+	font-weight: bold;
+}
+
 
 /* -------------------------------------------------------------------------- */
 /* Kontrolni panel                                                            */
@@ -180,8 +188,10 @@
 	align-items:     stretch;
 	flex-wrap:       wrap;
 	border:          solid 1px #aaa;
-	padding:         4px;
+	padding:         4px 4px 0 4px;
 	margin:          0 0 16px 0;
+
+	min-height:      32px;
 }
 
 .hint_pojedinacni {
@@ -194,6 +204,8 @@
 	color:           #fff;
 	padding:         4px 5px 4px 8px;
 	margin:          0 0 4px 0;
+
+	cursor:          pointer;
 }
 
 .hint_pojedinacni_izabrani {
@@ -215,6 +227,15 @@
 	//border: none;
 }
 
+.dugme_skrivanje {
+	display: none;
+}
+
+.dugme_otkrivanje {
+	display:    block;
+	background: red;
+}
+
 #hintovi_labela, #hint_labela {
 	font-weight: bold;
 	font-family: OpenSans-Regular, Arial, sans-serif;
@@ -226,8 +247,14 @@
 	margin: 16px 0 8px 0;
 }
 
-#hintovi_ispis {
-	border:  solid 2px #ccc;
-	padding: 8px;
+#hintovi_info {
+	display:        flex;
+	flex-direction: column;
+
+	border:      solid 2px #ccc;
+	padding:     8px;
 	font-family: OpenSans-Regular, Arial, sans-serif;
+	cursor:      pointer;
+
+	min-height:  64px;
 }
