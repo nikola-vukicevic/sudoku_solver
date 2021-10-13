@@ -131,6 +131,17 @@
 	font-weight: bold;
 }
 
+.sudoku_polje_kandidat_solver_4 {
+	background:  #4af;
+	color:       #fff;
+	font-weight: bold;
+}
+
+.sudoku_polje_kandidat_solver_5 {
+	background:  #d33;
+	color:       #fff;
+	font-weight: bold;
+}
 
 /* -------------------------------------------------------------------------- */
 /* Kontrolni panel                                                            */
@@ -186,12 +197,13 @@
 	flex-direction:  column;
 	justify-content: flex-start;
 	align-items:     stretch;
-	flex-wrap:       wrap;
 	border:          solid 1px #aaa;
 	padding:         4px 4px 0 4px;
 	margin:          0 0 16px 0;
 
 	min-height:      32px;
+	max-height:      216px;
+	overflow:        auto;
 }
 
 .hint_pojedinacni {
@@ -202,8 +214,8 @@
 
 	background:      #aaa;
 	color:           #fff;
-	padding:         4px 5px 4px 8px;
-	margin:          0 0 4px 0;
+	padding:         4px 0 4px 8px;
+	margin:          0 0 3px 0;
 
 	cursor:          pointer;
 }
@@ -223,8 +235,8 @@
 }
 
 .hint_pojedinacni_dugme {
-	padding: 0 4px;
-	//border: none;
+	padding:      0 4px;
+	margin-right: 4px;
 }
 
 .dugme_skrivanje {

@@ -19,6 +19,10 @@
 		<script defer src='07_korisnicki_interfejs.js'>  </script>
 		<script defer src='08_pokretanje.js'>            </script>
 		<script defer src='09_potraga_za_hintovima.js'>  </script>
+		<script defer src='potraga_za_hintovima/01_jedini_kandidat.js'>  </script>
+		<script defer src='potraga_za_hintovima/02_skriveni_singl.js'>   </script>
+		<script defer src='potraga_za_hintovima/03_upereni_par.js'>      </script>
+		<script defer src='potraga_za_hintovima/04_skriveni_par.js'>     </script>
 	</head>
 	
 	<body>
@@ -28,16 +32,17 @@
 
 			<div id='kontrolni_panel'>
 				<div id='kontrolni_panel_dugmici'>
-					<button onclick='azuriranjeKandidataOsnovno(sudoku_tabela, true)'>Ažuriranje kandidata</button>
-					<button onclick='iskljucivanjeSvihKandidata(sudoku_tabela)'>Uklanjanje svih kandidata</button>
-					<button onclick='ucitavanjeZagonetkePrompt(sudoku_tabela)'>Učitavanje nove tabele</button>
-					<button onclick='resetTabele(sudoku_tabela)'>Reset tabele</button>
-					<button onclick='generisanjeHintova(sudoku_tabela)'>Novi hint(ovi)</button>
+					<button onclick='azuriranjeKandidataOsnovno(sudoku_tabela_glavna, true)'>Ažuriranje kandidata</button>
+					<button onclick='iskljucivanjeSvihKandidata(sudoku_tabela_glavna)'>Uklanjanje svih kandidata</button>
+					<button onclick='ucitavanjeZagonetkePrompt(sudoku_tabela_glavna)'>Učitavanje nove tabele</button>
+					<button onclick='resetTabele(sudoku_tabela_glavna)'>Reset tabele</button>
+					<button onclick='generisanjeHintova(sudoku_tabela_glavna, false)'>Generisanje hintova shodno tabeli</button>
+					<button onclick='generisanjeHintova(sudoku_tabela_glavna, true)'>Generisanje hintova sa automatskim ažuriranjem (H)</button>
 					<div id='kontrolni_panel_undo_redo'>
-						<button onclick='undo(sudoku_tabela, STEK_GLAVNI)'>Undo</button>
+						<button onclick='undo(sudoku_tabela_glavna, STEK_GLAVNI)'>Undo</button>
 						<div id='kontrolni_panel_undo_redo_razdvajac'>
 						</div>
-						<button onclick='redo(sudoku_tabela, STEK_GLAVNI)'>Redo</button>
+						<button onclick='redo(sudoku_tabela_glavna, STEK_GLAVNI)'>Redo</button>
 					</div>
 				</div>
 

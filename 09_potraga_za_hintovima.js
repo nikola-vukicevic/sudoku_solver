@@ -1,7 +1,17 @@
+/* -------------------------------------------------------------------------- */
+// Copyright (c) 2021. Nikola Vukićević
+/* -------------------------------------------------------------------------- */
+
+let PRETRAGA_JEDINI_KANDIDAT = true;
+let PRETRAGA_SKRIVENI_SINGL  = true;
+let PRETRAGA_UPERENI_PAR     = true;
+let PRETRAGA_SKRIVENI_PAR    = true;
+
 let potragaPodaci = {
 	lista:       [ ] ,
 	indeksHinta: -1 ,
 }
+
 let INDEKS_HINTA = 0;
 
 function dodavanjeUListuHintova(lista, hintovi) {
@@ -16,75 +26,29 @@ function praznjenjeListeHintova(lista) {
 	}
 }
 
-function potragaZaHintovima(sudoku_tabela, lista_hintova) {
-	let tabelaRadna = tabelaSnapshot(sudoku_tabela);
-	azuriranjeKandidataOsnovno(tabelaRadna, true)
+function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik) {
+	let tabelaRadna   = tabelaSnapshot(sudoku_tabela);
+	potragaPodaci.indeksHinta = 0;
+	
+	if(automatik) {
+		azuriranjeKandidataOsnovno(tabelaRadna, automatik)
+	}
 
 	praznjenjeListeHintova(lista_hintova);
-	potragaPodaci.indeksHinta = 0;
 
 	let rezJediniKandidat = potragaZaHintovimaJediniKandidat(tabelaRadna, potragaPodaci);
 	dodavanjeUListuHintova(lista_hintova, rezJediniKandidat);
 	
-	/* Ovde će biti i ostali:
-	       - skriveni singlovi
-	       - parovi
-	       - skriveni parovi
-	       - pokazujuci parovi
-	       - etc ....
-	*/
-}
+	let rezSkriveniSingl = potragaZaHintovimaSkriveniSingl(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezSkriveniSingl);
+	
+	let rezUpereniPar = potragaZaHintovimaUpereniPar(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezUpereniPar);
 
-function generisanjeHintaJediniKandidat(polje, kandidat, potraga_podaci) {
-	let hint = {
-		indeks: potraga_podaci.indeksHinta ,
-		naslov: `P${polje.indeks} - ${kandidat} - Jedini kandidat` ,
-		opis : `<span>Polje #${polje.indeks}</span>
-<span>Red: ${polje.red} Kolona: ${polje.kolona}</span>
-<span>Vrednost - ${kandidat}</span>
-<span>Jedini kandidat</span>
+	let rezSkriveniPar = potragaZaHintovimaSkriveniPar(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezSkriveniPar);
 
-` ,
-		listaHint: [
-			[ polje.indeks, -1, kandidat , 5 , true, true ] ,
-		] ,
-
-		listaIzvrsavanje: [
-			[ polje.indeks, kandidat , -1 , 5, false, false ] ,
-		] ,
+	for(let i = 0; i < lista_hintova.length; i++) {
+		lista_hintova[i].indeks = i + 1;
 	}
-
-	return hint;
-}
-
-function potragaZaHintovimaJediniKandidatJednoPolje(listaHintova, polje, potraga_podaci) {
-	if(!polje.otkrivanje) return;
-	let kandidati   = polje.kandidati;
-	let brKandidata = 0;
-	let indeks      = -1; 
-	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		if(kandidati[i] > 0) {
-			brKandidata++;
-			indeks = i;
-		}
-		if(brKandidata > 1) break;
-	}
-
-	if(brKandidata == 1) {
-		potraga_podaci.indeksHinta++;
-		let hint = generisanjeHintaJediniKandidat(polje, indeks, potraga_podaci);
-		listaHintova.push(hint); 
-	}
-}
-
-function potragaZaHintovimaJediniKandidat(sudoku_tabela, potraga_podaci) {
-	let lista_hintova = [ ];
-
-	for(let i = 1; i <= BROJ_POLJA; i++) {
-		let polje = sudoku_tabela.tabela[i];
-		potragaZaHintovimaJediniKandidatJednoPolje(lista_hintova, polje, potraga_podaci);
-	}
-	sudoku_tabela
-
-	return lista_hintova;
 }

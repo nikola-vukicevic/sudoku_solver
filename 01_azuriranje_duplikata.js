@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- */
+// Copyright (c) 2021. Nikola Vukićević
+/* -------------------------------------------------------------------------- */
+
 function azuriranjeDuplikataRedovi(sudoku_tabela, red_struktura, red_indeks) {
 	for(let i = 0; i < BROJ_BLOKOVA; i++) {
 		let polje    = red_struktura[i];

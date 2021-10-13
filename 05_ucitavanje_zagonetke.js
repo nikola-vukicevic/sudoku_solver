@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- */
+// Copyright (c) 2021. Nikola Vukićević
+/* -------------------------------------------------------------------------- */
+
 function ucitavanjeZagonetkePrompt(sudoku_tabela) {
 	
 	let t1 = prompt("Unesite polja (81 znak - prazna polja se predstavljaju nulom - razmaci su dozvoljeni)");

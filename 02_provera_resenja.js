@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- */
+// Copyright (c) 2021. Nikola Vukićević
+/* -------------------------------------------------------------------------- */
+
 function proveraResenjaJedanRed(sudoku_tabela, red_indeks) {
 	let red_duplikati   = sudoku_tabela.duplikati_redovi[red_indeks];
 	let lista_duplikata = [ ];

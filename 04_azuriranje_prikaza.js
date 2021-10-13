@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- */
+// Copyright (c) 2021. Nikola Vukićević
+/* -------------------------------------------------------------------------- */
+
 function resetFiksnogPolja(polje) {
 	polje.greska = false;
 	polje.okvir  = false;
@@ -60,13 +64,18 @@ function prikazPoljaKandidati(polje) {
 		kandidatHTML.classList.remove("sudoku_polje_kandidat_solver_1");
 		kandidatHTML.classList.remove("sudoku_polje_kandidat_solver_2");
 		kandidatHTML.classList.remove("sudoku_polje_kandidat_solver_3");
+		kandidatHTML.classList.remove("sudoku_polje_kandidat_solver_4");
+		kandidatHTML.classList.remove("sudoku_polje_kandidat_solver_5");
 		
 		switch(polje.kandidati[i]) {
+			case 0: polje.kandidati[i] = 0;                                         break;
 			case 1: kandidatHTML.classList.add("sudoku_polje_kandidat_toggle");     break;
 			case 2: kandidatHTML.classList.add("sudoku_polje_kandidat_par_toggle"); break;
 			case 3: kandidatHTML.classList.add("sudoku_polje_kandidat_solver_1");   break;
 			case 4: kandidatHTML.classList.add("sudoku_polje_kandidat_solver_2");   break;
 			case 5: kandidatHTML.classList.add("sudoku_polje_kandidat_solver_3");   break;
+			case 6: kandidatHTML.classList.add("sudoku_polje_kandidat_solver_4");   break;
+			case 7: kandidatHTML.classList.add("sudoku_polje_kandidat_solver_5");   break;
 			default: break;
 		}
 	}

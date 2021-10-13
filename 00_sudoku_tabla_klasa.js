@@ -1,19 +1,26 @@
+/* -------------------------------------------------------------------------- */
+// Copyright (c) 2021. Nikola Vukićević
+/* -------------------------------------------------------------------------- */
+
 let BROJ_REDOVA  = 9;
 let BROJ_KOLONA  = 9;
 let BROJ_BLOKOVA = 9;
 let BROJ_POLJA   = 81;
 
 let STEK_GLAVNI = {
-	stekUndo:         [ ] ,
-	stekRedo:         [ ] ,
+	stekUndo: [ ] ,
+	stekRedo: [ ] ,
 };
 
-let sudoku_tabela = {
+let sudoku_tabela_glavna = {
     aktivnoPolje:             0 ,
     aktivniKandidatKlik:      0 ,
     aktivniKandidatDupliKlik: 0 ,
+    izabraniHint:             -1 ,
+    brojHintova:              0 ,
     iskljuceniKandidat:       0 ,
     iskljuceniKandidatTip:    0 ,
+    hintoviAktivni:           false , 
     automatskoAzuriranje:     true ,
 
 	tabela: [ ] , // GLAVNA TABELA - popunjava se preko funkcija
@@ -119,18 +126,19 @@ let sudoku_tabela = {
 
 function generisanjePolja() {
 	let polje = {
-		indeks:      -1 ,
-		red:         -1 ,
-		kolona:      -1 , 
-		vrednost:    0 ,
-		kandidati:   [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
-		//kandidati:   [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ] ,
-		kandidati_1: [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
-		kandidati_2: [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ] ,
-		otkrivanje:  true  ,
-		fiksno:      false ,
-		greska:      false ,
-		okvir:       false ,
+		indeks:        -1 ,
+		red:           -1 ,
+		kolona:        -1 , 
+		vrednost:      0 ,
+		kandidati:     [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
+		//kandidati:     [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ] ,
+		kandidati_1:   [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
+		kandidati_2:   [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ] ,
+		jedanKandidat: false ,
+		otkrivanje:    true  ,
+		fiksno:        false ,
+		greska:        false ,
+		okvir:         false ,
 	};
 
 	return polje;
@@ -149,7 +157,6 @@ function generisanjeTabele(tabela) {
 function tabelaSnapshot(sudoku_tabela) {
 	let json_podaci    = JSON.stringify(sudoku_tabela);
 	return JSON.parse(json_podaci);
-
 }
 
 function kopiranjeStrukture(t1, t2) {
@@ -174,18 +181,18 @@ function kopiranjeStrukture(t1, t2) {
 }
 
 function generisanjeHTMLPolja(id) {
-	let sablon = `<div class='sudoku_polje iskljucena_selekcija' id='sudoku_polje_${id}' ondblclick='poljeDupliKlik(event, sudoku_tabela, ${id}, 0)'>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_1' onclick='obradaKlika(event, sudoku_tabela, ${id}, 1)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 1)'>1</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_2' onclick='obradaKlika(event, sudoku_tabela, ${id}, 2)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 2)'>2</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_3' onclick='obradaKlika(event, sudoku_tabela, ${id}, 3)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 3)'>3</div>
+	let sablon = `<div class='sudoku_polje iskljucena_selekcija' id='sudoku_polje_${id}' ondblclick='poljeDupliKlik(event, sudoku_tabela_glavna, ${id}, 0)'>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_1' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 1)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 1)'>1</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_2' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 2)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 2)'>2</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_3' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 3)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 3)'>3</div>
 	
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_4' onclick='obradaKlika(event, sudoku_tabela, ${id}, 4)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 4)'>4</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_5' onclick='obradaKlika(event, sudoku_tabela, ${id}, 5)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 5)''>5</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_6' onclick='obradaKlika(event, sudoku_tabela, ${id}, 6)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 6)'>6</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_4' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 4)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 4)'>4</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_5' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 5)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 5)''>5</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_6' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 6)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 6)'>6</div>
 	
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_7' onclick='obradaKlika(event, sudoku_tabela, ${id}, 7)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 7)'>7</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_8' onclick='obradaKlika(event, sudoku_tabela, ${id}, 8)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 8)'>8</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_9' onclick='obradaKlika(event, sudoku_tabela, ${id}, 9)' oncontextmenu='toggleParKandidata(event, sudoku_tabela, ${id}, 9)'>9</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_7' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 7)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 7)'>7</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_8' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 8)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 8)'>8</div>
+	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_9' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 9)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 9)'>9</div>
 </div>`;
 	
 	return sablon;
