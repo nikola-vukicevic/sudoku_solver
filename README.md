@@ -3,14 +3,17 @@ Sudoku solver koji traži rešenje korak po korak
 
 Za sada implementirane tehnike:
 
+- Prosta eliminacija kandidata ukrštanjem reda, kolone i bloka
 - jedini kandidat
 - skriveni singl
+- upereni par
+- skriveni par
 
 U planu:
 
-- eliminišući par
-- skriveni tripleti
+- tripleti
 - X-wing
+- XY-wing
 
 (Verovatno i sve ostale tehnike.)
 
