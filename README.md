@@ -1,5 +1,6 @@
-# sudoku_solver_ai_wip
-Sudoku solver koji traži rešenje korak po korak
+# sudoku_solver
+
+Sudoku solver koji traži rešenje korak po korak (WIP; za sada još uvek ima bagova).
 
 Za sada implementirane tehnike:
 
