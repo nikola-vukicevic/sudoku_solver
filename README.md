@@ -12,14 +12,14 @@ Za sada implementirane tehnike:
 - skriveni par
 - prisvajajući par / triplet
 - triplet
+- X-wing
 - XY-wing
 
 U planu:
 
-- X-wing
 - Coloring
 - Forcing chain
-- Nishio
+- Nishio (???)
 
 ## Demo
 
