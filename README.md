@@ -4,13 +4,14 @@ Sudoku solver koji traži rešenje korak po korak (WIP; za sada još uvek mestim
 
 Za sada implementirane tehnike:
 
-- Prosta eliminacija kandidata ukrštanjem reda, kolone i bloka
+- Ažuriranje kandidata (prosta eliminacija kandidata ukrštanjem reda, kolone i bloka)
 - jedini kandidat
 - skriveni singl
+- prepoznati par
 - upereni par
 - skriveni par
-- prisvajajući par
-- tripleti
+- prisvajajući par / triplet
+- triplet
 - XY-wing
 
 U planu:
@@ -19,8 +20,6 @@ U planu:
 - Coloring
 - Forcing chain
 - Nishio
-
-(Verovatno i sve ostale tehnike.)
 
 ## Demo
 
