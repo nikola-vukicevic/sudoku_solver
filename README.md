@@ -9,12 +9,16 @@ Za sada implementirane tehnike:
 - skriveni singl
 - upereni par
 - skriveni par
+- prisvajajući par
+- tripleti
+- XY-wing
 
 U planu:
 
-- tripleti
 - X-wing
-- XY-wing
+- Coloring
+- Forcing chain
+- Nishio
 
 (Verovatno i sve ostale tehnike.)
 
