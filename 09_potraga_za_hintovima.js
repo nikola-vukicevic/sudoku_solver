@@ -2,10 +2,14 @@
 // Copyright (c) 2021. Nikola Vukićević
 /* -------------------------------------------------------------------------- */
 
-let PRETRAGA_JEDINI_KANDIDAT = true;
-let PRETRAGA_SKRIVENI_SINGL  = true;
-let PRETRAGA_UPERENI_PAR     = true;
-let PRETRAGA_SKRIVENI_PAR    = true;
+let PRETRAGA_JEDINI_KANDIDAT    = true;
+let PRETRAGA_SKRIVENI_SINGL     = true;
+let PRETRAGA_UPERENI_PAR        = true;
+let PRETRAGA_SKRIVENI_PAR       = true;
+let PRETRAGA_PREPOZNATI_PAR     = true;
+let PRETRAGA_PRISVAJAJUCI_PAR   = true;
+let PRETRAGA_PREPOZNATI_TRIPLET = true;
+let PRETRAGA_XY_WING            = true;
 
 let potragaPodaci = {
 	lista:       [ ] ,
@@ -47,6 +51,18 @@ function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik) {
 
 	let rezSkriveniPar = potragaZaHintovimaSkriveniPar(tabelaRadna, potragaPodaci);
 	dodavanjeUListuHintova(lista_hintova, rezSkriveniPar);
+
+	let rezPrepoznatiPar = potragaZaHintovimaPrepoznatiPar(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezPrepoznatiPar);
+
+	let rezPrisvajajuciPar = potragaZaHintovimaPrisvajajuciPar(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezPrisvajajuciPar);
+
+	let rezPrepoznatiTriplet = potragaZaHintovimaPrepoznatiTriplet(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezPrepoznatiTriplet);
+
+	let rezXYWing = potragaZaHintovimaXYWing(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezXYWing);
 
 	for(let i = 0; i < lista_hintova.length; i++) {
 		lista_hintova[i].indeks = i + 1;

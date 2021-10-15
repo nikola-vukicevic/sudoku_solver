@@ -128,12 +128,10 @@ function generisanjePolja() {
 	let polje = {
 		indeks:        -1 ,
 		red:           -1 ,
-		kolona:        -1 , 
-		vrednost:      0 ,
+		kolona:        -1 ,
+		blok:          -1 ,
+		vrednost:       0 ,
 		kandidati:     [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
-		//kandidati:     [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ] ,
-		kandidati_1:   [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
-		kandidati_2:   [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ] ,
 		jedanKandidat: false ,
 		otkrivanje:    true  ,
 		fiksno:        false ,
@@ -144,13 +142,27 @@ function generisanjePolja() {
 	return polje;
 }
 
-function generisanjeTabele(tabela) {
+function generisanjeTabele(sudoku_tabela) {
+	let tabela = sudoku_tabela.tabela;
 	for(let i = 0; i <= BROJ_POLJA; i++) {
 		let polje = generisanjePolja();
 		polje.indeks = i;
 		polje.red    = Math.floor((polje.indeks - 1) / BROJ_KOLONA) + 1 ,
 		polje.kolona = Math.floor((polje.indeks - 1) % BROJ_KOLONA) + 1 , 
 		tabela.push(polje);
+	}
+
+	upisivanjeBlokova(sudoku_tabela);
+}
+
+function upisivanjeBlokova(sudoku_tabela) {
+	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
+		let blok = sudoku_tabela.blokovi[i];
+
+		for(j = 0; j < blok.length; j++) {
+			let polje  = sudoku_tabela.tabela[blok[j]];
+			polje.blok = i;
+		}
 	}
 }
 

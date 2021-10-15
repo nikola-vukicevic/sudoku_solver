@@ -73,3 +73,32 @@ function localStorageUpis(sudoku_tabela) {
 	let json_podaci = JSON.stringify(sudoku_tabela);
 	localStorage.setItem("podaci", json_podaci);
 }
+
+function uklanjanjeDuplikataNiz(niz) {
+	if(niz.length == 0) return niz;
+	
+	let novi = [ ];
+	novi.push(niz[0]);
+
+	for(let i = 1; i < niz.length; i++) {
+		if(niz[i] != niz[i - 1]) {
+			novi.push(niz[i]);
+		}
+	}
+
+	return novi
+}
+
+function kopiranjeDuplikataNiz(niz) {
+	if(niz.length < 2) return niz;
+	
+	let novi = [ ];
+	
+	for(let i = 1; i < niz.length; i++) {
+		if(niz[i] === niz[i - 1]) {
+			novi.push(niz[i]);
+		}
+	}
+
+	return novi
+}

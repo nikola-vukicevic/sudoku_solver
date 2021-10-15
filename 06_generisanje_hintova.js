@@ -96,7 +96,7 @@ function popunjavanjeListeHintova(sudoku_tabela, lista_hintova) {
 
 function generisanjeHinta(sudoku_tabela, hint) {
 	let sablon = `
-<div class='hint_pojedinacni' id='hint_pojedinacni_${hint.indeks}' onclick='prikazHinta(sudoku_tabela_glavna, sacuvanaTabela, listaHintova, ${hint.indeks})'>
+<div class='hint_pojedinacni iskljucena_selekcija' id='hint_pojedinacni_${hint.indeks}' onclick='prikazHinta(sudoku_tabela_glavna, sacuvanaTabela, listaHintova, ${hint.indeks})'>
 	<span class='hint_pojedinacni_tekst'>
 		${hint.naslov}
 	</span>

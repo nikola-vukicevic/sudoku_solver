@@ -100,7 +100,6 @@ function upereniParoviPronalazenjePoprecnihPolja(sudoku_tabela, niz, kandidat, p
 function generisanjeHintovaUpareniParovi(lista_hintova, parovi, sudoku_tabela) {
 	parovi.forEach(par => {
 		let hint_struktura = generisanjeHintaUpereniParPriprema(lista_hintova, par, sudoku_tabela);
-		console.log(hint_struktura);
 		generisanjeHintaUpereniPar(lista_hintova, hint_struktura);
 	});
 }
@@ -108,7 +107,7 @@ function generisanjeHintovaUpareniParovi(lista_hintova, parovi, sudoku_tabela) {
 function pronalazenjeUperenihParova(niz_prebrojavanje, blok, indeks, sudoku_tabela) {
 	let nova_lista = [];
 
-	for(let i = 0; i < blok.length; i++) {
+	for(let i = 0; i < niz_prebrojavanje.length; i++) {
 		if(niz_prebrojavanje[i][0] == 2) {
 			let p1    = niz_prebrojavanje[i][2][0];
 			let p2    = niz_prebrojavanje[i][2][1];

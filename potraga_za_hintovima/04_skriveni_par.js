@@ -36,10 +36,7 @@ function generisanjeHintaSkriveniPar(lista_hintova, niz_naziv, niz_indeks, par_k
 function iskljucivanjeKandidataSkriveniPar(hint, polje, kandidat_1, kandidat_2) {
 	let kandidati = polje.kandidati;
 	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		console.log(`Polje: ${polje.indeks} kandidat: ${i} vrednost: ${kandidati[i]}`)
 		if(i != kandidat_1 && i != kandidat_2 && kandidati[i] > 0) {
-			console.log(kandidati, kandidati[i], kandidat_1, kandidat_2)
-			//kandidati[i] = 0;
 			hint.listaHint.push(        [ polje.indeks, -1, i, 3, true, true  ] );
 			hint.listaIzvrsavanje.push( [ polje.indeks, -1, i, 0, true, false ] );
 		}

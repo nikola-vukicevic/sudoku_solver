@@ -17,7 +17,7 @@ function prepoznavanjeTastera(event) {
 }
 
 function prihvatanjeHintaEnter(sudoku_tabela) {
-	usvajanjeHinta(sudoku_tabela, sacuvanaTabela, listaHintova, sudoku_tabela.izabraniHint);
+	usvajanjeHinta(sudoku_tabela_glavna, sacuvanaTabela, listaHintova, sudoku_tabela.izabraniHint);
 }
 
 function otkazivanjeHintovaEsc(sudoku_tabela) {
@@ -46,7 +46,6 @@ function promenaHintaPrethodniHint(sudoku_tabela) {
 }
 
 function generisanjeHintovaPrekoPrecice(sudoku_tabela, automatik) {
-	sudoku_tabela.hintoviAktivni = true;
 	sudoku_tabela.izabraniHint   = 1;
 	generisanjeHintova(sudoku_tabela, automatik);
 }

@@ -116,6 +116,7 @@
 }
 
 .sudoku_polje_kandidat_solver_1 {
+	background:  #f0f0f0;
 	color:       #f4a;
 	font-weight: bold;
 }

@@ -265,7 +265,7 @@ function azuriranjePrikazaTabele(sudoku_tabela, provera) {
 		azuriranjePrikazaPolja(sudoku_tabela, i);
 	}
 
-	localStorageUpis(sudoku_tabela);
+	//localStorageUpis(sudoku_tabela);
 
 	/* ----- telemetrija ---------------------------------------------------- */
 	let t2 = performance.now();
