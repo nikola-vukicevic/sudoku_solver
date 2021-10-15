@@ -1,6 +1,6 @@
 # sudoku_solver
 
-Sudoku solver koji traži rešenje korak po korak (WIP; za sada još uvek ima bagova).
+Sudoku solver koji traži rešenje korak po korak (WIP; za sada još uvek mestimično ima sitnih bagova).
 
 Za sada implementirane tehnike:
 
