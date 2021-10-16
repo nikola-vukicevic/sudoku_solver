@@ -14,8 +14,15 @@ function generisanjeHintaPrepoznatiTripl(lista_hintova, par_kandidata, niz_naziv
 		
 	let hint = {
 		indeks: -1 ,
-		naslov: `P${polje_1.indeks}, P${polje_2.indeks}, P${polje_3.indeks} (${niz_naziv} #${niz_indeks}) - Prepoznati triplet ${kandidat_1}-${kandidat_2}-${kandidat_3}`,
-		opis : `U ${gramatika} #${niz_indeks}, vrednosti ${kandidat_1}, ${kandidat_2} i ${kandidat_3} grupisane u poljima P${polje_1.indeks}, P${polje_2.indeks} i P${polje_3.indeks}, čine triplet koji se može rasporediti jedino u tri navedena polja, pa se stoga vrednosti ${kandidat_1}, ${kandidat_2} i ${kandidat_3} mogu isključiti kao kandidati u svim ostalim poljima u ${niz_indeks}. ${gramatika}.` ,
+		naslov: `Prepoznati triplet [${niz_naziv} #${niz_indeks}][P${polje_1.indeks}, P${polje_2.indeks}, P${polje_3.indeks}] - ${kandidat_1}-${kandidat_2}-${kandidat_3}`,
+		opis : `<h3 class='sudoku_h3'>Triplet (${niz_naziv} #${niz_indeks})</h3>
+<p class='sudoku_p'>
+	U <strong>${gramatika} #${niz_indeks}</strong>, vrednosti <strong>${kandidat_1}</strong>, <strong>${kandidat_2}</strong> i <strong>${kandidat_3}</strong> grupisane u poljima <strong>P${polje_1.indeks}</strong>, <strong>P${polje_2.indeks}</strong> i <strong>P${polje_3.indeks}</strong>, čine <strong>triplet</strong> koji se može rasporediti jedino u tri navedena polja.
+</p>
+
+<p class='sudoku_p'>
+	Vrednosti <strong>${kandidat_1}</strong>, <strong>${kandidat_2}</strong> i <strong>${kandidat_3}</strong> mogu se isključiti kao kandidati u svim ostalim poljima u <strong>${niz_indeks}. ${gramatika}</strong>.
+</p>` ,
 		
 		listaHint: [ ] ,
 

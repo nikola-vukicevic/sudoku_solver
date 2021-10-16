@@ -11,8 +11,15 @@ function generisanjeHintaPrepoznatiPar(lista_hintova, par_kandidata, niz_naziv, 
 		
 	let hint = {
 		indeks: -1 ,
-		naslov: `P${kandidat_1.indeks}, P${kandidat_2.indeks} (${niz_naziv} #${niz_indeks}) - Prepoznati par (${vrednost_1}-${vrednost_2})`,
-		opis : `U ${gramatika} #${niz_indeks}, kandidati ${vrednost_1} i ${vrednost_2} su jedini mogući par kandidata u poljima P${kandidat_1.indeks} i P${kandidat_2.indeks}, pa se stoga kandidati ${vrednost_1} i ${vrednost_2} mogu isključiti kao kandidati u svim ostalim poljima u ${niz_indeks} ${gramatika}.` ,
+		naslov: `Prepoznati par [${niz_naziv} #${niz_indeks}][P${kandidat_1.indeks}, P${kandidat_2.indeks}] - (${vrednost_1}-${vrednost_2})`,
+		opis : `<h3 class='sudoku_h3'>Prepoznati par (${niz_naziv} #${niz_indeks})</h3>
+<p class='sudoku_p'>
+	U  <strong>${niz_indeks}. ${gramatika}</strong>, u poljima <strong>P${kandidat_1.indeks}</strong> i <strong>P${kandidat_2.indeks}</strong>, kandidati <strong>${vrednost_1}</strong> i <strong>${vrednost_2}</strong> predstavljaju jedini mogući <strong>par</strong> kandidata.
+</p>
+
+<p class='sudoku_p'>
+	Vrednosti <strong>${vrednost_1}</strong> i <strong>${vrednost_2}</strong> mogu se <strong>isključiti</strong> kao kandidati u ostalim poljima u <strong>${niz_indeks} ${gramatika}</strong>.
+</p>` ,
 		
 		listaHint: [
 			[ kandidat_1.indeks, -1, vrednost_1 , 6 , true, true ] ,

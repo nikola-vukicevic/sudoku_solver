@@ -5,14 +5,20 @@
 function generisanjeHintaSkriveniSingl(lista_hintova, niz_naziv, niz_indeks, polje, kandidat) {
 	polje = polje[0]
 	if(polje.jedanKandidat) return;
+	let gramatika_1 = (niz_naziv == "Red")? "redu" : (niz_naziv == "Kolona")? "koloni" : "bloku";
+	let gramatika_2 = (niz_naziv == "Red")? "kome" : (niz_naziv == "Kolona")? "kojoj"  : "kome";
 	let hint = {
 		indeks: -1 ,
-		naslov: `P${polje.indeks} - ${niz_naziv} ${niz_indeks} - ${kandidat} - Skriveni singl` ,
-		opis : `<span>Polje #${polje.indeks}</span>
-<span>Red: ${polje.red} Kolona: ${polje.kolona}</span>
-<span>Vrednost - ${kandidat}</span>
-<span>Skriven u: ${niz_naziv} ${niz_indeks}</span>
-<span>Skriveni singl</span>` ,
+		naslov: `Skriveni singl [P${polje.indeks}][${niz_naziv} ${niz_indeks}] - ${kandidat}` ,
+		opis : `<h3 class='sudoku_h3'>Skriveni singl (P${polje.indeks})</h3>
+
+<p class='sudoku_p'>
+	Polje <strong>P${polje.indeks}</strong> sadrži više kandidata, ali, pripada <strong>${niz_indeks}. ${gramatika_1}</strong>, u ${gramatika_2} se vrednost <strong>${kandidat}</strong> pojavljuje samo jednom kao kandidat (u polju <strong>P${polje.indeks}</strong>).
+</p>
+
+<p class='sudoku_p'>
+	Ostali kandidati u polju <strong>P${polje.indeks}</strong> mogu se <strong>isključiti</strong> i vrednost <strong>${kandidat}</strong> se može neposredno usvojiti kao <strong>rešenje</strong>.
+</p>` ,
 		
 		listaHint: [
 			[ polje.indeks, -1, kandidat , 5 , true, true ] ,

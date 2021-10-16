@@ -9,6 +9,7 @@ let PRETRAGA_SKRIVENI_PAR       = true;
 let PRETRAGA_PREPOZNATI_PAR     = true;
 let PRETRAGA_PRISVAJAJUCI_PAR   = true;
 let PRETRAGA_PREPOZNATI_TRIPLET = true;
+let PRETRAGA_X_WING             = true;
 let PRETRAGA_XY_WING            = true;
 
 let potragaPodaci = {
@@ -60,6 +61,9 @@ function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik) {
 
 	let rezPrepoznatiTriplet = potragaZaHintovimaPrepoznatiTriplet(tabelaRadna, potragaPodaci);
 	dodavanjeUListuHintova(lista_hintova, rezPrepoznatiTriplet);
+
+	let rezXWing = potragaZaHintovimaXWing(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezXWing);
 
 	let rezXYWing = potragaZaHintovimaXYWing(tabelaRadna, potragaPodaci);
 	dodavanjeUListuHintova(lista_hintova, rezXYWing);

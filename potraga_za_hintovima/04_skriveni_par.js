@@ -6,8 +6,16 @@ function generisanjeHintaSkriveniPar(lista_hintova, niz_naziv, niz_indeks, par_k
 	let gramatika = (niz_naziv == "Red")? "redu" : (niz_naziv == "Kolona")? "koloni" : "bloku";
 	let hint = {
 		indeks: -1 ,
-		naslov: `P${par_kandidata[2].indeks}, P${par_kandidata[3].indeks} (${niz_naziv} #${niz_indeks}) - Skriveni par (${par_kandidata[0]}-${par_kandidata[1]})`,
-		opis : `U ${gramatika} #${niz_indeks}, vrednosti ${par_kandidata[0]} i ${par_kandidata[1]} pojavljuju se (zajedno) samo u poljima P${par_kandidata[2].indeks} i P${par_kandidata[3].indeks} i time čine skriveni par, što povlači da se ostale vrednosti u navedenim poljima mogu isključiti kao kandidati.` ,
+		naslov: `Skriveni par [${niz_naziv} #${niz_indeks}][P${par_kandidata[2].indeks}, P${par_kandidata[3].indeks}]  - (${par_kandidata[0]}-${par_kandidata[1]})`,
+		opis : `<h3 class='sudoku_h3'>Skriveni par (${niz_naziv} #${niz_indeks})</h3>
+
+<p class='sudoku_p'>
+	U <strong>${gramatika} #${niz_indeks}</strong>, vrednosti <strong>${par_kandidata[0]}</strong> i <strong>${par_kandidata[1]}</strong> pojavljuju se (zajedno) samo u poljima <strong>P${par_kandidata[2].indeks}</strong> i <strong>P${par_kandidata[3].indeks}</strong> i time čine <strong>skriveni par</strong>
+</p>
+
+<p class='sudoku_p'>
+	Ostali kandidati u navedenim poljima mogu se <strong>isključiti</strong>.
+</p>` ,
 		
 		listaHint: [
 			// [ polje.indeks, -1, kandidat , 5 , true, true ] ,

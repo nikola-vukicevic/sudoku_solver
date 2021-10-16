@@ -15,8 +15,16 @@ function generisanjeHintaUpereniPar(lista_hintova, hint_struktura) {
 
 	let hint = {
 		indeks: -1 ,
-		naslov: `P${hint_struktura.polje_1.indeks}, P${hint_struktura.polje_2.indeks} (Blok ${hint_struktura.blok_indeks}) - Kandidat ${hint_struktura.kandidat_indeks} - Upereni par` ,
-		opis: `U bloku #${hint_struktura.blok_indeks}, kandidati sa vrednošću ${hint_struktura.kandidat_indeks} u poljima P${hint_struktura.polje_1.indeks} i P${hint_struktura.polje_2.indeks}, čine upereni par, koji povlači isključivanje kandidatske vrednosti ${hint_struktura.kandidat_indeks} u ostalim poljima u ${hint_struktura.indeks_poprecnog}. ${hint_struktura.tip_strukture} (${(brojPoprecnihPolja < 2)? `polje` : `polja`} ${kandidatskaPolja})` ,
+		naslov: `Upereni par [Blok #${hint_struktura.blok_indeks}][P${hint_struktura.polje_1.indeks}, P${hint_struktura.polje_2.indeks}] - ${hint_struktura.kandidat_indeks}` ,
+		opis: `<h3 class='sudoku_h3'>Upereni par (Blok #${hint_struktura.blok_indeks})</h3>
+
+<p class='sudoku_p'>
+	U <strong>bloku #${hint_struktura.blok_indeks}</strong>, kandidati sa vrednošću <strong>${hint_struktura.kandidat_indeks}</strong> u poljima <strong>P${hint_struktura.polje_1.indeks}</strong> i <strong>P${hint_struktura.polje_2.indeks}</strong>, čine <strong>upereni par</strong>.
+</p>
+
+<p class='sudoku_p'>
+	Budući da upereni par pripada i <strong>${hint_struktura.indeks_poprecnog}. ${hint_struktura.tip_strukture}</strong>, vrednost <strong>${hint_struktura.kandidat_indeks}</strong> može se <strong>isključiti</strong> kao kandidat u ostalim poljima u <strong>${hint_struktura.indeks_poprecnog}. ${hint_struktura.tip_strukture}</strong>.
+</p>` ,
 		
 		listaHint:        [
 			[ polje_1.indeks, -1, kandidat , 6 , true, true ] ,

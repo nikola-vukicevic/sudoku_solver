@@ -3,15 +3,22 @@
 /* -------------------------------------------------------------------------- */
 
 function generisanjeHintaXYWing(lista_hintova, xy_wing, sudoku_tabela) {
-	console.log(xy_wing)
 	let hint = {
 		indeks: -1 ,
-		naslov: `P${xy_wing.pivot.indeks}, P${xy_wing.krak_1.indeks}, P${xy_wing.krak_2.indeks} - XY-Wing - Isključivanje vrednosti ${xy_wing.zajednickiKandidat}`,
-		opis : `<span>Parovi vrednosti u poljima P${xy_wing.pivot.indeks}, P${xy_wing.krak_1.indeks} i P${xy_wing.krak_2.indeks}, čine XY-Wing triplet koji funkcioniše na sledeći način:</span>
-<span>- Polje P${xy_wing.pivot.indeks}, koje sadrži par kandidata ${xy_wing.pivotKandidati[0]} i ${xy_wing.pivotKandidati[1]} je uporišno polje ('pivot'), koje 'vidi' preostala dva polja - P${xy_wing.krak_1.indeks} i P${xy_wing.krak_2.indeks} ('krakove'), koja se ne 'vide' međusobno</span>
-<span>- Ukoliko je kandidat ${xy_wing.pivotKandidati[0]} rešenje za polje P${xy_wing.pivot.indeks}, u polju P${(xy_wing.krak_1_Kandidati.includes(xy_wing.pivotKandidati[0]))? xy_wing.krak_1.indeks : xy_wing.krak_2.indeks}, kandidat ${xy_wing.pivotKandidati[0]} ne može biti rešenje, pa rešenje za polje P${(xy_wing.krak_1_Kandidati.includes(xy_wing.pivotKandidati[0]))? xy_wing.krak_1.indeks : xy_wing.krak_2.indeks} mora biti ${xy_wing.zajednickiKandidat} </span>
-<span>- Ukoliko je kandidat ${xy_wing.pivotKandidati[1]} rešenje za polje P${xy_wing.pivot.indeks}, u polju P${(xy_wing.krak_2_Kandidati.includes(xy_wing.pivotKandidati[1]))? xy_wing.krak_2.indeks : xy_wing.krak_1.indeks}, kandidat ${xy_wing.pivotKandidati[1]} ne može biti rešenje, pa rešenje za polje P${(xy_wing.krak_2_Kandidati.includes(xy_wing.pivotKandidati[1]))? xy_wing.krak_2.indeks : xy_wing.krak_1.indeks} mora biti ${xy_wing.zajednickiKandidat} </span>
-<span>- Budući da jedan od 'krakova' na kraju mora sadržati vrednost ${xy_wing.zajednickiKandidat} kao rešenje, zaključujemo da se vrednost ${xy_wing.zajednickiKandidat} može isključiti kao kandidat u svim poljima koja istovremeno 'vide' oba 'kraka' - polja P${xy_wing.krak_1.indeks} i P${xy_wing.krak_2.indeks}</span>
+		naslov: `XY-Wing - [P${xy_wing.pivot.indeks}|P${xy_wing.krak_1.indeks}|P${xy_wing.krak_2.indeks}]  - Isključivanje vrednosti ${xy_wing.zajednickiKandidat}`,
+		opis : `<h3 class='sudoku_h3'>XY-Wing (P${xy_wing.pivot.indeks}, P${xy_wing.krak_1.indeks}, P${xy_wing.krak_2.indeks})</h3>
+
+<p class='sudoku_p'>
+	Parovi vrednosti u poljima <strong>P${xy_wing.pivot.indeks}</strong>, <strong>P${xy_wing.krak_1.indeks}</strong> i <strong>P${xy_wing.krak_2.indeks}</strong>, obrazuju <strong>XY-Wing</strong> (specifičan triplet), koji funkcioniše na sledeći način:
+</p>
+
+<ul class='sudoku_ul'>
+	<li>Polje <strong>P${xy_wing.pivot.indeks}</strong>, koje sadrži par kandidata <strong>${xy_wing.pivotKandidati[0]}</strong> i <strong>${xy_wing.pivotKandidati[1]}</strong> predstavlja uporišno polje ('<strong>pivot</strong>'), koje 'vidi' preostala dva polja ('<strong>krakove</strong>') - <strong>P${xy_wing.krak_1.indeks}</strong> i <strong>P${xy_wing.krak_2.indeks}</strong>, koji se ne 'vide' međusobno</li>
+	<li>Ukoliko je kandidat <strong>${xy_wing.pivotKandidati[0]}</strong> rešenje za polje <strong>P${xy_wing.pivot.indeks}</strong>, u polju <strong>P${(xy_wing.krak_1_Kandidati.includes(xy_wing.pivotKandidati[0]))? xy_wing.krak_1.indeks : xy_wing.krak_2.indeks}</strong>, kandidat <strong>${xy_wing.pivotKandidati[0]}</strong> ne može biti rešenje, pa rešenje za polje <strong>P${(xy_wing.krak_1_Kandidati.includes(xy_wing.pivotKandidati[0]))? xy_wing.krak_1.indeks : xy_wing.krak_2.indeks}</strong> mora biti <strong>${xy_wing.zajednickiKandidat}</strong></li>
+	<li>Ukoliko je kandidat <strong>${xy_wing.pivotKandidati[1]}</strong> rešenje za polje <strong>P${xy_wing.pivot.indeks}</strong>, u polju <strong>P${(xy_wing.krak_2_Kandidati.includes(xy_wing.pivotKandidati[1]))? xy_wing.krak_2.indeks : xy_wing.krak_1.indeks}</strong>, kandidat <strong>${xy_wing.pivotKandidati[1]}</strong> ne može biti rešenje, pa rešenje za polje <strong>P${(xy_wing.krak_2_Kandidati.includes(xy_wing.pivotKandidati[1]))? xy_wing.krak_2.indeks : xy_wing.krak_1.indeks}</strong> mora biti <strong>${xy_wing.zajednickiKandidat}</strong></li>
+<p>
+	Budući da jedan od 'krakova' na kraju mora sadržati vrednost <strong>${xy_wing.zajednickiKandidat}</strong> kao rešenje, zaključujemo da se vrednost <strong>${xy_wing.zajednickiKandidat}</strong> može <strong>isključiti</strong> kao kandidat u svim poljima koja istovremeno 'vide' oba 'kraka' - polja <strong>P${xy_wing.krak_1.indeks}</strong> i <strong>P${xy_wing.krak_2.indeks}</strong></li>
+</ul>
 ` ,
 		
 		listaHint: [

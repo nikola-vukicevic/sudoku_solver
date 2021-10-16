@@ -50,9 +50,16 @@ function popunjavanjeHintaPrisvajajuciParDvaKandidata(hint, kandidati, niz_naziv
 	let vrednost  = kandidati[0];
 	let polja     = kandidati[2];
 	
-	hint.naslov = `P${polja[0].indeks}, P${polja[1].indeks} (${niz_naziv} #${niz_indeks}) - vrednost ${vrednost} - Prisvajajući par.`;
+	hint.naslov = `Prisvajajući par [Blok #${kandidati[2][0].blok}][P${polja[0].indeks}, P${polja[1].indeks}] - ${vrednost}`;
 	
-	hint.opis   = `U ${gramatika} #${niz_indeks}, vrednost ${vrednost} pojavljuje se samo u poljima P${kandidati[2][0].indeks} i P${kandidati[2][1].indeks}, koja (istovremeno) pripadaju i ${kandidati[2][0].blok}. bloku. Budući da se vrednost ${vrednost} mora pojaviti u jednom od ova dva polja, blok #${polja[0].blok} praktično "prisvaja" par polja P${kandidati[2][0].indeks} i P${kandidati[2][1].indeks}, kao jedine pozicije na kojima se vrednost ${vrednost} može pojaviti, pa se ostali kandidati sa vrednošću ${vrednost} u bloku #${polja[0].blok} mogu isključiti.`;
+	hint.opis   = `<h3 class='sudoku_h3'>Prisvajajući par (Blok #${kandidati[2][0].blok})</h3>
+<p class='sudoku_p'>
+	Budući da se vrednost <strong>${vrednost}</strong> u <strong>${niz_indeks}. ${gramatika}</strong> može pojaviti samo u poljima <strong>P${kandidati[2][0].indeks}</strong> i <strong>P${kandidati[2][1].indeks}</strong> i da navedena polja (istovremeno) pripadaju i <strong>${kandidati[2][0].blok}. bloku</strong>, blok praktično "prisvaja" par polja <strong>P${kandidati[2][0].indeks}</strong> i <strong>P${kandidati[2][1].indeks}</strong>, kao jedine pozicije na kojima se vrednost <strong>${vrednost}</strong> može pojaviti u <strong>${kandidati[2][0].blok}. bloku</strong>.
+</p>
+
+<p class='sudoku_p'>
+	Ostali kandidati sa vrednošću <strong>${vrednost}</strong> u <strong>bloku #${polja[0].blok}</strong> mogu se <strong>isključiti</strong>.
+</p>`;
 
 	hint.listaHint.push( [ kandidati[2][0].indeks , -1, vrednost, 6, true, true ] );
 	hint.listaHint.push( [ kandidati[2][1].indeks , -1, vrednost, 6, true, true ] );
@@ -65,9 +72,16 @@ function popunjavanjeHintaPrisvajajuciParTriKandidata(hint, kandidati, niz_naziv
 	let vrednost  = kandidati[0];
 	let polja     = kandidati[2];
 	
-	hint.naslov = `P${polja[0].indeks}, P${polja[1].indeks}, P${polja[2].indeks} (${niz_naziv} #${niz_indeks}) - vrednost ${vrednost} - Prisvajajući triplet`;
+	hint.naslov = `Prisvajajući triplet [Blok #${kandidati[2][0].blok}][P${polja[0].indeks}, P${polja[1].indeks}, P${polja[2].indeks}] - ${vrednost}`;
 	
-	hint.opis   = `U ${gramatika} #${niz_indeks}, vrednost ${vrednost} pojavljuje se samo u poljima P${kandidati[2][0].indeks}, P${kandidati[2][1].indeks} i P${kandidati[2][2].indeks}, koja (istovremeno) pripadaju i ${kandidati[2][0].blok}. bloku. Budući da se vrednost ${vrednost} mora pojaviti u jednom od ova tri polja, blok #${polja[0].blok} praktično "prisvaja" triplet polja P${kandidati[2][0].indeks}, P${kandidati[2][1].indeks} i P${kandidati[2][2].indeks}, kao jedine pozicije na kojima se vrednost ${vrednost} može pojaviti, pa se ostali kandidati sa vrednošću ${vrednost} u bloku #${polja[0].blok} mogu isključiti.`;
+	hint.opis   = `<h3 class='sudoku_h3'>Prisvajajući triplet (Blok #${kandidati[2][0].blok})</h3>
+<p class='sudoku_p'>
+	Budući da se vrednost <strong>${vrednost}</strong> u <strong>${niz_indeks}. ${gramatika}</strong> može pojaviti samo u poljima <strong>P${kandidati[2][0].indeks}</strong>, <strong>P${kandidati[2][1].indeks}</strong> i <strong>P${kandidati[2][2].indeks}</strong> i da navedena polja (istovremeno) pripadaju i <strong>${kandidati[2][0].blok}. bloku</strong>, blok praktično "prisvaja" triplet polja <strong>P${kandidati[2][0].indeks}</strong>, <strong>P${kandidati[2][1].indeks}</strong> i <strong>P${kandidati[2][2].indeks}</strong>, kao jedine pozicije na kojima se vrednost <strong>${vrednost}</strong> može pojaviti u <strong>${kandidati[2][0].blok}. bloku</strong>.
+</p>
+
+<p class='sudoku_p'>
+	Ostali kandidati sa vrednošću <strong>${vrednost}</strong> u <strong>bloku #${polja[0].blok}</strong> mogu se <strong>isključiti</strong>.
+</p>`;
 
 	hint.listaHint.push( [ kandidati[2][0].indeks , -1, vrednost, 6, true, true ] );
 	hint.listaHint.push( [ kandidati[2][1].indeks , -1, vrednost, 6, true, true ] );
@@ -81,18 +95,6 @@ function generisanjeHintovaPrisvajajuciParovi(lista_hintova, lista_kandidata, ni
 		generisanjeHintaPrisvajajuciPar(lista_hintova, kandidati, niz_naziv, niz_indeks, sudoku_tabela)
 	});
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 function daLiSuKandidatiOkPrisvajajuciPar(kandidati) {
 	let blok = kandidati[0].blok;
