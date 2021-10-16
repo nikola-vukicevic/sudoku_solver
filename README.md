@@ -2,6 +2,12 @@
 
 Sudoku solver koji traži rešenje korak po korak (WIP; za sada još uvek mestimično ima sitnih UI bagova).
 
+## Demo
+
+https://www.codeblog.rs/primeri/sudoku_solver/
+
+## Info
+
 Za sada implementirane tehnike:
 
 - Ažuriranje kandidata (prosta eliminacija kandidata ukrštanjem reda, kolone i bloka)
@@ -21,6 +27,4 @@ U planu:
 - Forcing chain
 - Nishio (???)
 
-## Demo
 
-https://www.codeblog.rs/primeri/sudoku_solver/
