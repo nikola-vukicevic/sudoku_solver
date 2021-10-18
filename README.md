@@ -13,11 +13,10 @@ Za sada implementirane tehnike:
 - Ažuriranje kandidata (prosta eliminacija kandidata ukrštanjem reda, kolone i bloka)
 - jedini kandidat
 - skriveni singl
-- prepoznati par
+- prepoznati par / triplet
 - upereni par
 - skriveni par
 - prisvajajući par / triplet
-- triplet
 - X-wing
 - XY-wing
 
