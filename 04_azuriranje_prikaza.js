@@ -12,7 +12,8 @@ function resetPolja(polje) {
 		polje.kandidati[i] = 0; // Reset  kandidata
 	}
 
-	polje.vrednost   = 0;	
+	polje.vrednost   = 0;
+	polje.boja       = BOJA_POLJA_DEFAULT;
 	polje.otkrivanje = true;
 	polje.fiksno     = false;
 	polje.greska     = false;
@@ -35,6 +36,11 @@ function resetHintova() {
 }
 
 function resetTabele(sudoku_tabela) {
+	if(sudoku_tabela.hintoviAktivni) {
+		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
+		return;
+	}
+
 	resetDuplikata(sudoku_tabela);
 	resetHintova();
 
@@ -103,7 +109,11 @@ function azuriranjeKandidataUkljucivanjeSvihKandidata(sudoku_tabela) {
 }
 
 function iskljucivanjeSvihKandidata(sudoku_tabela) {
-	
+	if(sudoku_tabela.hintoviAktivni) {
+		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
+		return;
+	}	
+
 	for(let i = 1; i <= BROJ_POLJA; i++) {
 		let polje = sudoku_tabela.tabela[i];
 		iskljucivanjeSvihKandidataPolje(polje);
@@ -196,6 +206,11 @@ function azuriranjeKandidataOsnovnoBlokovi(sudoku_tabela, rezim) {
 
 function azuriranjeKandidataOsnovno(sudoku_tabela, na_dugme) {
 	
+	if(sudoku_tabela.hintoviAktivni) {
+		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
+		return;
+	}
+	
 	/* ----- telemetrija ---------------------------------------------------- */
 	let t1 = performance.now();
 	/* ---------------------------------------------------------------------- */
@@ -234,9 +249,13 @@ function azuriranjePrikazaPolja(sudoku_tabela, id) {
 		poljeHTML.innerHTML = polje.vrednost;
 	}
 
+	poljeHTML.style.background = polje.boja;
+	//console.log(polje.boja);
 	poljeHTML.classList.remove("sudoku_polje_fiksno");
 	poljeHTML.classList.remove("sudoku_polje_greska");
-	poljeHTML.classList.remove("sudoku_polje_okvir");
+	poljeHTML.classList.remove("sudoku_polje_okvir_1");
+	poljeHTML.classList.remove("sudoku_polje_okvir_2");
+	poljeHTML.classList.remove("sudoku_polje_okvir_3");
 	
 	if(polje.fiksno) {
 		poljeHTML.classList.add("sudoku_polje_fiksno");
@@ -244,10 +263,14 @@ function azuriranjePrikazaPolja(sudoku_tabela, id) {
 	
 	if(polje.greska) {
 		poljeHTML.classList.add("sudoku_polje_greska");
+		polje.boja = BOJA_POLJA_GRESKA;
+	}
+	else {
+		polje.boja = BOJA_POLJA_DEFAULT;
 	}
 
-	if(polje.okvir) {
-		poljeHTML.classList.add("sudoku_polje_okvir");
+	if(polje.okvir != false) {
+		poljeHTML.classList.add(`sudoku_polje_okvir_${polje.okvir}`);
 	}
 }
 
@@ -264,6 +287,9 @@ function azuriranjePrikazaTabele(sudoku_tabela, provera) {
 	for(let i = 1; i <= BROJ_POLJA; i++) {
 		azuriranjePrikazaPolja(sudoku_tabela, i);
 	}
+
+	prebrojavanjePreostalih(sudoku_tabela);
+	proglasavanjeRezultata(sudoku_tabela);
 
 	//localStorageUpis(sudoku_tabela);
 

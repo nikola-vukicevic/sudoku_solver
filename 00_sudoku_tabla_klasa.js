@@ -18,10 +18,14 @@ let sudoku_tabela_glavna = {
     aktivniKandidatDupliKlik: 0 ,
     izabraniHint:             -1 ,
     brojHintova:              0 ,
+    brojPreostalihPolja:      BROJ_POLJA ,
+    imaLiGresaka:             false ,
+    cestitkaUpucena:          false ,
     iskljuceniKandidat:       0 ,
     iskljuceniKandidatTip:    0 ,
     hintoviAktivni:           false , 
-    automatskoAzuriranje:     true ,
+    automatskoAzuriranje:     true  ,
+    rezimKreiranjaTabele:     false ,
 
 	tabela: [ ] , // GLAVNA TABELA - popunjava se preko funkcija
                   // generisanjePolja i generisanjeTabele
@@ -131,6 +135,7 @@ function generisanjePolja() {
 		kolona:        -1 ,
 		blok:          -1 ,
 		vrednost:       0 ,
+		boja:          "#fff" ,
 		kandidati:     [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
 		jedanKandidat: false ,
 		otkrivanje:    true  ,

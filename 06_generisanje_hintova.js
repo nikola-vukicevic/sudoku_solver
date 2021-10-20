@@ -2,12 +2,27 @@
 // Copyright (c) 2021. Nikola Vukićević
 /* -------------------------------------------------------------------------- */
 
-let sacuvanaTabela = null;
-let listaHintova   = [ ];
+let sacuvanaTabela     = null;
+let listaHintova       = [ ];
+let BOJA_POLJA_DEFAULT = "#fff";
+let BOJA_POLJA_GRESKA  = "#ee625c";
+let BOJA_POLJA_1       = "#f3fff3";
+let BOJA_POLJA_2       = "#f3fff3";
+let BOJA_POLJA_3       = "#f3fff3";
+let BOJA_POLJA_4       = "#f3fff3";
+let BOJA_POLJA_5       = "#f3fff3";
+let BOJA_HINT_1_1      = "#f3fff3"; // zeleno - traka
+let BOJA_HINT_1_2      = "#E2FFE2"; // zeleno - polje
+let BOJA_HINT_2_1      = "#f3f9ff"; // plavo  - traka
+let BOJA_HINT_2_2      = "#e1f0ff"; // plavo  - polje
+let BOJA_HINT_3_1      = "#fff6f5"; // crveno - traka
+let BOJA_HINT_3_2      = "#fbe5e4"; // crveno - polje
 
 function generisanjeHintova(sudoku_tabela, automatik) {
-	
-	if(sudoku_tabela.hintoviAktivni) return;;
+	if(sudoku_tabela.hintoviAktivni) {
+		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
+		return;
+	}
 	
 	/* ----- telemetrija ---------------------------------------------------- */
 	let t1 = performance.now();
@@ -42,18 +57,19 @@ function izvrsavanjeHinta(sudoku_tabela, hint) {
 	let polje = sudoku_tabela.tabela[hint[0]];
 
 	/*
-		      0         1           2            3         4         5
-		[ polje_id, vrednost, poljeKandidat, vrednost, otkrivanje, okvir ]
+		      0          1            2             3          4          5      6
+		[ polje_id , vrednost , poljeKandidat , vrednost , otkrivanje , okvir , boja ]
 	*/
 
 	if(hint[1] != -1) polje.vrednost = hint[1];
 	
-	if(hint[2] != -1) {
+	if(hint[2] != -1 && hint[3] != -1) {
 		polje.kandidati[hint[2]] = hint[3];
 	}
 	
 	polje.otkrivanje = hint[4];
 	polje.okvir      = hint[5];
+	if(hint[6] != null) polje.boja = hint[6];
 }
 
 function izvrsavanjeListeHintova(sudoku_tabela, hint, rezim) {
@@ -121,6 +137,13 @@ function deselektovanjeHintTraka() {
 	}
 }
 
+function bojenjeNizaHint(hint, niz, boja, sudoku_tabela) {
+	niz.forEach(poljeIndeks => {
+		let polje = sudoku_tabela.tabela[poljeIndeks];
+		hint.listaHint.push( [ poljeIndeks , -1 , -1  , -1 , polje.otkrivanje , false , boja  ] )
+	});
+}
+
 function prikazHinta(sudoku_tabela, sacuvana_tabela, hintovi_lista, hint_indeks) {
 	let hintTraka        = document.getElementById(`hint_pojedinacni_${hint_indeks}`);
 	let hintoviInfo      = document.getElementById(`hintovi_info`);
@@ -145,7 +168,8 @@ function usvajanjeHintaEvent(event, sudoku_tabela, sacuvana_tabela, hintovi_list
 }
 
 function usvajanjeHinta(sudoku_tabela, sacuvana_tabela, hintovi_lista, hint_indeks) {
-	sudoku_tabela.hintoviAktivni = false;
+	sudoku_tabela.hintoviAktivni       = false;
+	sudoku_tabela.automatskoAzuriranje = true;
 	let hintoviLista = document.getElementById(`hintovi_lista`);
 	let hintoviInfo  = document.getElementById(`hintovi_info`);
 	
@@ -154,8 +178,7 @@ function usvajanjeHinta(sudoku_tabela, sacuvana_tabela, hintovi_lista, hint_inde
 
 	let tabelaHintovi = generisanjeHintTabele(sacuvana_tabela, hintovi_lista[hint_indeks - 1], 2);
 	kopiranjeStrukture(tabelaHintovi, sudoku_tabela);
-	//kopiranjeStrukture(sudoku_tabela_glavna, sacuvanaTabela);
-	azuriranjeKandidataOsnovno(sudoku_tabela, false);
+	azuriranjeKandidataOsnovno(sudoku_tabela, false); // ???
 	upisNaUndoStek(sudoku_tabela, STEK_GLAVNI);
 }
 
@@ -169,5 +192,6 @@ function otkazivanjeHinta(sudoku_tabela, sacuvana_tabela) {
 	kopiranjeStrukture(sacuvana_tabela, sudoku_tabela);
 	sudoku_tabela.hintoviAktivni       = false;
 	sudoku_tabela.automatskoAzuriranje = true;
+	console.log(sudoku_tabela_glavna.automatskoAzuriranje)
 	azuriranjePrikazaTabele(sudoku_tabela, false);
 }

@@ -1,0 +1,43 @@
+#sudoku_klik_meni {
+	display:        flex;
+	flex-direction: column;
+	
+	//background: burlywood;
+	height:     124px;
+	//padding:    12px;
+	position:   absolute;
+	top:        145px;
+	left:       175px;
+}
+
+#sudoku_meni_dugmici {
+	display:        flex;
+	flex-direction: row;
+}
+
+.sudoku_meni_daljinski_upravljac_dugme_1 {
+	width:     80px;
+	height:    80px;
+	margin:    0;
+	font-size: 12pt;
+}
+
+#sudoku_meni_daljinski_upravljac {
+	display:  grid;
+	grid-template-columns: auto auto auto;
+}
+
+.sudoku_meni_daljinski_upravljac_dugme_2 {
+	width:     40px;
+	height:    40px;
+	margin:    0;
+	font-size: 16pt;
+}
+
+.sudoku_meni_dugme_otkazivanje_1 {
+	min-height: 40px;
+}
+
+.sudoku_meni_dugme_otkazivanje_2 {
+	min-height: 40px;
+}

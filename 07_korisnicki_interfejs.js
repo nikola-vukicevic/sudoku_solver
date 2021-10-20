@@ -51,8 +51,18 @@ function generisanjeHintovaPrekoPrecice(sudoku_tabela, automatik) {
 }
 
 function obradaKlika(event, sudoku_tabela, polje_id, kandidat_br) {
+	if(MOBILNI_UNOS) {
+		klikMobilniObrada(event, polje_id, sudoku_tabela);
+		return;
+	}
+
 	if(sudoku_tabela.hintoviAktivni) {
 		alert("Nije moguće ručno menjati vrednosti dok su hintovi prikazani.");
+		return;
+	}
+
+	if(sudoku_tabela.rezimKreiranjaTabele) {
+		poljeDupliKlik(event, sudoku_tabela, polje_id, kandidat_br);
 		return;
 	}
 

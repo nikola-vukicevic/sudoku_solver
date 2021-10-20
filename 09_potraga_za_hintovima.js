@@ -2,9 +2,13 @@
 // Copyright (c) 2021. Nikola Vukićević
 /* -------------------------------------------------------------------------- */
 
+let DEBUG_PORUKE_FUNKCIJE       = true;
+
+/* ----- Pojedinačne tehnike - uključivanje / isključivanje ----------------- */
+
 let PRETRAGA_JEDINI_KANDIDAT    = true;
 let PRETRAGA_SKRIVENI_SINGL     = true;
-let PRETRAGA_UPERENI_PAR        = true;
+let PRETRAGA_USMERENI_PAR       = true;
 let PRETRAGA_SKRIVENI_PAR       = true;
 let PRETRAGA_PREPOZNATI_PAR     = true;
 let PRETRAGA_PRISVAJAJUCI_PAR   = true;
@@ -32,6 +36,11 @@ function praznjenjeListeHintova(lista) {
 }
 
 function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik) {
+	
+	/* ----- Telemetrija ---------------------------------------------------- */
+	let T1 = performance.now();
+	/* ---------------------------------------------------------------------- */
+
 	let tabelaRadna   = tabelaSnapshot(sudoku_tabela);
 	potragaPodaci.indeksHinta = 0;
 	
@@ -47,8 +56,8 @@ function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik) {
 	let rezSkriveniSingl = potragaZaHintovimaSkriveniSingl(tabelaRadna, potragaPodaci);
 	dodavanjeUListuHintova(lista_hintova, rezSkriveniSingl);
 	
-	let rezUpereniPar = potragaZaHintovimaUpereniPar(tabelaRadna, potragaPodaci);
-	dodavanjeUListuHintova(lista_hintova, rezUpereniPar);
+	let rezUsmereniPar = potragaZaHintovimaUsmereniPar(tabelaRadna, potragaPodaci);
+	dodavanjeUListuHintova(lista_hintova, rezUsmereniPar);
 
 	let rezSkriveniPar = potragaZaHintovimaSkriveniPar(tabelaRadna, potragaPodaci);
 	dodavanjeUListuHintova(lista_hintova, rezSkriveniPar);
@@ -71,4 +80,10 @@ function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik) {
 	for(let i = 0; i < lista_hintova.length; i++) {
 		lista_hintova[i].indeks = i + 1;
 	}
+
+	/* ----- Telemetrija ---------------------------------------------------- */
+	let T2    = performance.now();
+	let ODZIV = T2 - T1;
+	console.log(`Vreme obrade Potraga za hintovima: ${ODZIV}ms`);
+	/* ---------------------------------------------------------------------- */
 }

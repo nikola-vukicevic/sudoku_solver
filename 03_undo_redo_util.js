@@ -39,6 +39,11 @@ function upisNaUndoStek(sudoku_tabela, stek_glavni) {
 }
 
 function undo(sudoku_tabela, stek_glavni) {
+	if(sudoku_tabela.hintoviAktivni) {
+		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
+		return;
+	}
+
 	if(stek_glavni.stekUndo.length < 2) {
 		return;
 	}
@@ -51,6 +56,11 @@ function undo(sudoku_tabela, stek_glavni) {
 }
 
 function redo(sudoku_tabela, stek_glavni) {
+	if(sudoku_tabela.hintoviAktivni) {
+		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
+		return;
+	}
+	
 	if(stek_glavni.stekRedo.length == 0) return;
 
 	let json_podaci = stek_glavni.stekRedo[stek_glavni.stekRedo.length - 1];
