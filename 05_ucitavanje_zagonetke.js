@@ -2,7 +2,11 @@
 // Copyright (c) 2021. Nikola Vukićević
 /* -------------------------------------------------------------------------- */
 
+// Moj API
 let GENERATOR_API_URL = `https://www.sudokublog.rs/generator/sudoku_generator.php?tezina=5`;
+
+// Sugoku
+// let GENERATOR_API_URL = `https://sugoku.herokuapp.com/board?difficulty=medium`;
 
 function ucitavanjeZagonetkePrompt(sudoku_tabela) {
 	if(sudoku_tabela.hintoviAktivni) {
@@ -226,7 +230,7 @@ function potvrdaNoveTabele(sudoku_tabela) {
 
 function prebrojavanjePreostalih(sudoku_tabela) {
 	/* ----- Telemetrija ---------------------------------------------------- */
-	let t1 = performance.now();
+	// let t1 = performance.now();
 	/* ---------------------------------------------------------------------- */
 
 	let brojac = BROJ_POLJA;
@@ -250,9 +254,9 @@ function prebrojavanjePreostalih(sudoku_tabela) {
 	if(brojac == 0) proglasavanjeRezultata(sudoku_tabela);
 
 	/* ----- Telemetrija ---------------------------------------------------- */
-	let t2    = performance.now();
-	let odziv = t2 - t1;
-	console.log(`prebrojavanje preostalih: ${odziv}ms`)
+	// let t2    = performance.now();
+	// let odziv = t2 - t1;
+	// console.log(`prebrojavanje preostalih: ${odziv}ms`)
 	/* ---------------------------------------------------------------------- */
 }
 
@@ -319,13 +323,13 @@ function skremblovanjeMatrice(sudoku_tabela) {
 	//azuriranjeKandidataOsnovno(sudoku_tabela, false);
 	iskljucivanjeSvihKandidata(sudoku_tabela)
 
-	console.log(mapa)
+	// console.log(mapa)
 
 	/* ----- Telemetrija ---------------------------------------------------- */
-	let t2    = performance.now();
-	let odziv = t2 - t1;
-	console.log(`Skremblovanje matrice: ${odziv}ms`)
-	console.log(`-----------------------------------`)
+	// let t2    = performance.now();
+	// let odziv = t2 - t1;
+	// console.log(`Skremblovanje matrice: ${odziv}ms`)
+	// console.log(`-----------------------------------`)
 	/* ---------------------------------------------------------------------- */
 	azuriranjePrikazaTabele(sudoku_tabela);
 }
@@ -338,6 +342,6 @@ function generisanjeNoveZagonetke(tezina, sudoku_tabela) {
 			let t2 = preciscavanjeTekstaZagonekte(tabela);
 			ucitavanjeZagonetkeIzTeksta(t2, sudoku_tabela);
 			skremblovanjeMatrice(sudoku_tabela);
-			console.log(tabela);
+			//console.log(tabela);
 		});
 }

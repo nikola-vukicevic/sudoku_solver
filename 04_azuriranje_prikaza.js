@@ -276,7 +276,7 @@ function azuriranjePrikazaPolja(sudoku_tabela, id) {
 
 function azuriranjePrikazaTabele(sudoku_tabela, provera) {
 	/* ----- telemetrija ---------------------------------------------------- */
-	let t1 = performance.now();
+	// let t1 = performance.now();
 	/* ---------------------------------------------------------------------- */
 
 	if(provera) {
@@ -294,8 +294,8 @@ function azuriranjePrikazaTabele(sudoku_tabela, provera) {
 	//localStorageUpis(sudoku_tabela);
 
 	/* ----- telemetrija ---------------------------------------------------- */
-	let t2 = performance.now();
-	let odziv = t2 - t1 + "ms";
-	console.log(`Ažuriranje tabele - ${odziv}`)
+	// let t2 = performance.now();
+	// let odziv = t2 - t1 + "ms";
+	// console.log(`Ažuriranje tabele - ${odziv}`)
 	/* ---------------------------------------------------------------------- */
 }

@@ -18,7 +18,7 @@ let BOJA_HINT_2_2      = "#e1f0ff"; // plavo  - polje
 let BOJA_HINT_3_1      = "#fff6f5"; // crveno - traka
 let BOJA_HINT_3_2      = "#fbe5e4"; // crveno - polje
 
-function generisanjeHintova(sudoku_tabela, automatik) {
+function generisanjeHintova(sudoku_tabela, automatik, samo_prvi) {
 	if(sudoku_tabela.hintoviAktivni) {
 		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
 		return;
@@ -31,7 +31,7 @@ function generisanjeHintova(sudoku_tabela, automatik) {
 	sudoku_tabela.automatskoAzuriranje = automatik;
 
 	sacuvanaTabela = tabelaSnapshot(sudoku_tabela);
-	potragaZaHintovima(sudoku_tabela, listaHintova, automatik);
+	potragaZaHintovima(sudoku_tabela, listaHintova, automatik, samo_prvi);
 
 	if(listaHintova.length == 0) return;
 
@@ -192,6 +192,6 @@ function otkazivanjeHinta(sudoku_tabela, sacuvana_tabela) {
 	kopiranjeStrukture(sacuvana_tabela, sudoku_tabela);
 	sudoku_tabela.hintoviAktivni       = false;
 	sudoku_tabela.automatskoAzuriranje = true;
-	console.log(sudoku_tabela_glavna.automatskoAzuriranje)
+	//console.log(sudoku_tabela_glavna.automatskoAzuriranje)
 	azuriranjePrikazaTabele(sudoku_tabela, false);
 }
