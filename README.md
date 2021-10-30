@@ -19,11 +19,9 @@ Za sada implementirane tehnike:
 - prisvajajući par / triplet
 - X-wing
 - XY-wing
-
+- Coloring
+ 
 U planu:
 
-- Coloring
 - Forcing chain
 - Nishio (???)
-
-
