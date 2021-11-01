@@ -6,6 +6,7 @@ let sacuvanaTabela     = null;
 let listaHintova       = [ ];
 let BOJA_POLJA_DEFAULT = "#fff";
 let BOJA_POLJA_GRESKA  = "#ee625c";
+let BOJA_POLJA_HOVER   = "#fff8db";
 let BOJA_POLJA_1       = "#f3fff3";
 let BOJA_POLJA_2       = "#f3fff3";
 let BOJA_POLJA_3       = "#f3fff3";
@@ -19,10 +20,7 @@ let BOJA_HINT_3_1      = "#fff6f5"; // crveno - traka
 let BOJA_HINT_3_2      = "#fbe5e4"; // crveno - polje
 
 function generisanjeHintova(sudoku_tabela, automatik, samo_prvi) {
-	if(sudoku_tabela.hintoviAktivni) {
-		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
-		return;
-	}
+	if(prikazPorukeHintoviAktivni(sudoku_tabela)) return;
 	
 	/* ----- telemetrija ---------------------------------------------------- */
 	let t1 = performance.now();

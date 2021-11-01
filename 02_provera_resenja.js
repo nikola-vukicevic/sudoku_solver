@@ -2,27 +2,31 @@
 // Copyright (c) 2021. Nikola Vukićević
 /* -------------------------------------------------------------------------- */
 
-function proveraResenjaJedanRed(sudoku_tabela, red_indeks) {
-	let red_duplikati   = sudoku_tabela.duplikati_redovi[red_indeks];
+function resetPoljeGreskaUNizu(niz, sudoku_tabela) {
+	for(let i = 0; i < niz.length; i++) {
+		let polje = sudoku_tabela.tabela[niz[i]];
+		polje.greska = false;
+	}
+}
+
+function proveraResenjaUJednomNizu(struktura, struktura_duplikati, indeks, azuriranje_polje_greska, sudoku_tabela) {
+	let niz_duplikati   = struktura_duplikati[indeks];
 	let lista_duplikata = [ ];
 	
-	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		if(red_duplikati[i] > 1) {
+	for(let i = 1; i <= niz_duplikati.length; i++) {
+		if(niz_duplikati[i] > 1) {
 			lista_duplikata.push(i);
 		}
 	}
 
-	for(let i = 0; i < BROJ_BLOKOVA; i++) {
-		let polje = sudoku_tabela.tabela[sudoku_tabela.redovi[red_indeks][i]];
-		polje.greska = false;
-	}
-
+	if(azuriranje_polje_greska) resetPoljeGreskaUNizu(struktura[indeks], sudoku_tabela);
+	
 	while(lista_duplikata.length > 0) {
 		let duplikat  = lista_duplikata[lista_duplikata.length - 1];
-		let red_polja = sudoku_tabela.redovi[red_indeks];
+		let niz_polja = struktura[indeks];
 
-		for(let i = 0; i < BROJ_BLOKOVA; i++) {
-			let polje = sudoku_tabela.tabela[red_polja[i]];
+		for(let i = 0; i < niz_polja.length; i++) {
+			let polje = sudoku_tabela.tabela[niz_polja[i]];
 			if(polje.vrednost == duplikat) {
 				polje.greska = true;
 			}
@@ -33,81 +37,25 @@ function proveraResenjaJedanRed(sudoku_tabela, red_indeks) {
 }
 
 function proveraResenjaRedovi(sudoku_tabela) {
-	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		proveraResenjaJedanRed(sudoku_tabela, i);
-	}
-}
-
-function proveraResenjaJednaKolona(sudoku_tabela, kolona_indeks) {
-	let kolona_duplikati = sudoku_tabela.duplikati_kolone[kolona_indeks];
-	let lista_duplikata  = [ ];
-	
-	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		if(kolona_duplikati[i] > 1) {
-			lista_duplikata.push(i);
-		}
-	}
-	
-	/* ---- Nema ažuriranja duplikata! ----- */
-
-	while(lista_duplikata.length > 0) {
-		let duplikat     = lista_duplikata[lista_duplikata.length - 1];
-		let kolona_polja = sudoku_tabela.kolone[kolona_indeks];
-
-		for(let i = 0; i < BROJ_BLOKOVA; i++) {
-			let polje = sudoku_tabela.tabela[kolona_polja[i]];
-			if(polje.vrednost == duplikat) {
-				polje.greska = true;
-			}
-		}
-
-		lista_duplikata.pop();
+	for(let i = 1; i < sudoku_tabela.redovi.length; i++) {
+		proveraResenjaUJednomNizu(sudoku_tabela.redovi, sudoku_tabela.duplikati_redovi, i, true, sudoku_tabela);
 	}
 }
 
 function proveraResenjaKolone(sudoku_tabela) {
-	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		proveraResenjaJednaKolona(sudoku_tabela, i);
-	}
-}
-
-function proveraResenjaJedanBlok(sudoku_tabela, blok_indeks) {
-	let blok_duplikati  = sudoku_tabela.duplikati_blokovi[blok_indeks];
-	let lista_duplikata = [ ];
-	
-	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		if(blok_duplikati[i] > 1) {
-			lista_duplikata.push(i);
-		}
-	}
-	
-	/* ---- Nema ažuriranja duplikata! ----- */
-
-	while(lista_duplikata.length > 0) {
-		let duplikat   = lista_duplikata[lista_duplikata.length - 1];
-		let blok_polja = sudoku_tabela.blokovi[blok_indeks];
-
-		for(let i = 0; i < BROJ_BLOKOVA; i++) {
-			let polje = sudoku_tabela.tabela[blok_polja[i]];
-			if(polje.vrednost == duplikat) {
-				polje.greska = true;
-			}
-		}
-
-		lista_duplikata.pop();
+	for(let i = 1; i < sudoku_tabela.kolone.length; i++) {
+		proveraResenjaUJednomNizu(sudoku_tabela.kolone, sudoku_tabela.duplikati_kolone, i, false, sudoku_tabela);
 	}
 }
 
 function proveraResenjaBlokovi(sudoku_tabela) {
-	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
-		proveraResenjaJedanBlok(sudoku_tabela, i);
+	for(let i = 1; i < sudoku_tabela.blokovi.length; i++) {
+		proveraResenjaUJednomNizu(sudoku_tabela.blokovi, sudoku_tabela.duplikati_blokovi, i, false, sudoku_tabela)
 	}
 }
 
 function proveraResenja(sudoku_tabela) {
-	
 	proveraResenjaRedovi(sudoku_tabela);
 	proveraResenjaKolone(sudoku_tabela);
 	proveraResenjaBlokovi(sudoku_tabela);
-
 }

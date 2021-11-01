@@ -15,6 +15,7 @@ let PRETRAGA_PRISVAJAJUCI_PAR   = true;
 let PRETRAGA_PREPOZNATI_TRIPLET = true;
 let PRETRAGA_X_WING             = true;
 let PRETRAGA_XY_WING            = true;
+let PRETRAGA_COLORING           = true;
 
 let potragaPodaci = {
 	lista:       [ ] ,
@@ -51,8 +52,9 @@ function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik, samo_prvi) 
 	// let T1 = performance.now();
 	/* ---------------------------------------------------------------------- */
 
-	let zaustavljanje = false;
-	let tabelaRadna   = tabelaSnapshot(sudoku_tabela);
+	let zaustavljanje         = false;
+	let samoPrveDveKategorije = automatik && true;
+	let tabelaRadna           = tabelaSnapshot(sudoku_tabela);
 	potragaPodaci.indeksHinta = 0;
 	
 	if(automatik) azuriranjeKandidataOsnovno(tabelaRadna, automatik)
@@ -70,45 +72,51 @@ function potragaZaHintovima(sudoku_tabela, lista_hintova, automatik, samo_prvi) 
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 	
-	if(!zaustavljanje) {
+	if(!samoPrveDveKategorije && !zaustavljanje) {
 		let rezUsmereniPar = potragaZaHintovimaUsmereniPar(tabelaRadna, potragaPodaci);
 		dodavanjeUListuHintova(lista_hintova, rezUsmereniPar);
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 
-	if(!zaustavljanje) {
+	if(!samoPrveDveKategorije && !zaustavljanje) {
 		let rezSkriveniPar = potragaZaHintovimaSkriveniPar(tabelaRadna, potragaPodaci);
 		dodavanjeUListuHintova(lista_hintova, rezSkriveniPar);
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 
-	if(!zaustavljanje) {
+	if(!samoPrveDveKategorije && !zaustavljanje) {
 		let rezPrepoznatiPar = potragaZaHintovimaPrepoznatiPar(tabelaRadna, potragaPodaci);
 		dodavanjeUListuHintova(lista_hintova, rezPrepoznatiPar);
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 
-	if(!zaustavljanje) {
+	if(!samoPrveDveKategorije && !zaustavljanje) {
 		let rezPrisvajajuciPar = potragaZaHintovimaPrisvajajuciPar(tabelaRadna, potragaPodaci);
 		dodavanjeUListuHintova(lista_hintova, rezPrisvajajuciPar);
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 
-	if(!zaustavljanje) {
+	if(!samoPrveDveKategorije && !zaustavljanje) {
 		let rezPrepoznatiTriplet = potragaZaHintovimaPrepoznatiTriplet(tabelaRadna, potragaPodaci);
 		dodavanjeUListuHintova(lista_hintova, rezPrepoznatiTriplet);
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 
-	if(!zaustavljanje) {
+	if(!samoPrveDveKategorije && !zaustavljanje) {
 		let rezXWing = potragaZaHintovimaXWing(tabelaRadna, potragaPodaci);
 		dodavanjeUListuHintova(lista_hintova, rezXWing);
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 
-	if(!zaustavljanje) {
+	if(!samoPrveDveKategorije && !zaustavljanje) {
 		let rezXYWing = potragaZaHintovimaXYWing(tabelaRadna, potragaPodaci);
 		dodavanjeUListuHintova(lista_hintova, rezXYWing);
+		zaustavljanje = samo_prvi && lista_hintova.length > 0;
+	}
+
+	if(!samoPrveDveKategorije && !zaustavljanje) {
+		let rezColoring = potragaZaHintovimaColoring(tabelaRadna, potragaPodaci);
+		dodavanjeUListuHintova(lista_hintova, rezColoring);
 		zaustavljanje = samo_prvi && lista_hintova.length > 0;
 	}
 

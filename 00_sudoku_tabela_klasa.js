@@ -6,6 +6,10 @@ let BROJ_REDOVA  = 9;
 let BROJ_KOLONA  = 9;
 let BROJ_BLOKOVA = 9;
 let BROJ_POLJA   = 81;
+let TEZINA       = 5;
+
+let JEZIK_INTERFEJSA = null; // 1 - srpski
+                             // 2 - engleski
 
 let STEK_GLAVNI = {
 	stekUndo: [ ] ,
@@ -16,6 +20,8 @@ let sudoku_tabela_glavna = {
     aktivnoPolje:             0 ,
     aktivniKandidatKlik:      0 ,
     aktivniKandidatDupliKlik: 0 ,
+    poljeHover:               null ,
+    rezimTastatura:           1 ,
     izabraniHint:             -1 ,
     brojHintova:              0 ,
     brojPreostalihPolja:      BROJ_POLJA ,
@@ -128,6 +134,39 @@ let sudoku_tabela_glavna = {
 	] ,
 }
 
+let SOLVER = {
+	zadati: 0 ,
+	najkompleksniji: 0 ,
+	naziviPrebrojavanje: [
+		"" ,
+		"Jedini kandidat" , 
+		"Skriveni singl" ,
+		"Usmereni par" ,
+		"Skriveni par" ,
+		"Prepoznati par" ,
+		"Prisvajajući par / triplet" ,
+		"Prepoznati triplet" ,
+		"X-Wing" ,
+		"XY-Wing" ,
+		"" ,
+		"Bojenje" ,
+	] ,
+	naziviKompleksnost: [
+		"" ,
+		"Jedini kandidat" ,
+		"Skriveni singl" ,
+		"Prepoznati par" ,
+		"Parovi ostalo / triplet" ,
+		"X-Wing" ,
+		"XY-Wing" ,
+		"" ,
+		"Bojenje" ,
+	],
+	prebrojavanje: [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
+	kompleksnost:  [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
+	listaHintova:  [ ] ,
+}
+
 function generisanjePolja() {
 	let polje = {
 		indeks:        -1 ,
@@ -137,6 +176,7 @@ function generisanjePolja() {
 		vrednost:       0 ,
 		boja:          "#fff" ,
 		kandidati:     [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
+		nizColoring:   [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ] ,
 		jedanKandidat: false ,
 		otkrivanje:    true  ,
 		fiksno:        false ,
@@ -197,19 +237,50 @@ function kopiranjeStrukture(t1, t2) {
 	//t2.duplikati_blokovi        = t1.blokovi.map(x =>   x);
 }
 
+function generisanjeTooltipa() {
+	if(MOBILNI_UNOS) {
+		return ``;
+	}
+
+	return `Klik -> Uključivanje isključivanje kandidata
+Desni klik -> Uključivanje isključivanje kandidata (sa bojenjem)
+Dupli klik - unos / brisanje vrednosti`;
+}
+
+let titleKandidatPoruka = ``;/// generisanjeTooltipa();;
+
+/*
+`Klik -> Uključivanje isključivanje kandidata
+Desni klik -> Uključivanje isključivanje kandidata (sa bojenjem)
+Dupli klik - unos / brisanje vrednosti`;
+//*/
+
+/*
+`<ul class='tooltiptext'>
+	<li>Klik -> Kandidat</li>
+	<li>Desni klik -> Kandidat (+ boja)</li>
+	<li>Dupli klik -> Vrednost</li>
+</ul>
+`;
+//*/
+
 function generisanjeHTMLPolja(id) {
-	let sablon = `<div class='sudoku_polje iskljucena_selekcija' id='sudoku_polje_${id}' ondblclick='poljeDupliKlik(event, sudoku_tabela_glavna, ${id}, 0)'>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_1' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 1)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 1)'>1</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_2' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 2)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 2)'>2</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_3' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 3)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 3)'>3</div>
-	
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_4' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 4)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 4)'>4</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_5' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 5)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 5)''>5</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_6' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 6)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 6)'>6</div>
-	
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_7' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 7)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 7)'>7</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_8' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 8)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 8)'>8</div>
-	<div class='sudoku_polje_kandidat' id='sudoku_polje_kandidat_${id}_9' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 9)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 9)'>9</div>
+	let sablon = `<div class='sudoku_polje iskljucena_selekcija' id='sudoku_polje_${id}' onmouseenter='bojenjePoljaHover(${id}, sudoku_tabela_glavna)' onmouseleave='bojenjePoljaUnHover(${id}, sudoku_tabela_glavna)' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 0)'>
+	<div class='sudoku_polje_vrednost' id='sudoku_polje_vrednost_${id}'>
+	</div>
+	<div class='sudoku_polje_kandidati' id='sudoku_polje_kandidati_${id}'>
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_1' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 1)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 1)'>1${titleKandidatPoruka}</div>
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_2' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 2)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 2)'>2${titleKandidatPoruka}</div>
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_3' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 3)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 3)'>3${titleKandidatPoruka}</div>
+		
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_4' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 4)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 4)'>4${titleKandidatPoruka}</div>
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_5' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 5)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 5)''>5${titleKandidatPoruka}</div>
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_6' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 6)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 6)'>6${titleKandidatPoruka}</div>
+		
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_7' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 7)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 7)'>7${titleKandidatPoruka}</div>
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_8' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 8)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 8)'>8${titleKandidatPoruka}</div>
+		<div class='sudoku_polje_kandidat tooltip' id='sudoku_polje_kandidat_${id}_9' onclick='obradaKlika(event, sudoku_tabela_glavna, ${id}, 9)' oncontextmenu='toggleParKandidata(event, sudoku_tabela_glavna, ${id}, 9)'>9${titleKandidatPoruka}</div>
+	</div>
 </div>`;
 	
 	return sablon;
@@ -231,7 +302,7 @@ function generisanjeHTMLBloka(blok, blok_id) {
 
 function generisanjeHTMLTabele(id_tabela, blokovi) {
 	let polje   = document.getElementById(id_tabela);
-	let sadrzaj = "";
+	let sadrzaj = ``;
 
 	for(let i = 1; i <= BROJ_BLOKOVA; i++) {
 		let blok = blokovi[i];

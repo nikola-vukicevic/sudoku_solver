@@ -2,17 +2,23 @@
 // Copyright (c) 2021. Nikola Vukićević
 /* -------------------------------------------------------------------------- */
 
+let ZAGONETKA_TEZINA = 5;
+
 // Moj API
+/*
+let GENERATOR_API_URL = `https://www.sudokublog.rs/generator/`;
 let GENERATOR_API_URL = `https://www.sudokublog.rs/generator/sudoku_generator.php?tezina=5`;
+let GENERATOR_API_URL = `http://localhost:3000/?tezina=5`;
+*/
+
+//let GENERATOR_API_URL = `http://localhost:3000/?tezina=7&rotacija1=da&rotacija2=ne&fliph=ne&flipv=ne&redovi=ne&kolone=ne&blokovi=ne&brojevi=ne`;
+let GENERATOR_API_URL = `https://www.sudokublog.rs/api/generator/?tezina=${ZAGONETKA_TEZINA}`;
 
 // Sugoku
 // let GENERATOR_API_URL = `https://sugoku.herokuapp.com/board?difficulty=medium`;
 
 function ucitavanjeZagonetkePrompt(sudoku_tabela) {
-	if(sudoku_tabela.hintoviAktivni) {
-		alert("Nije moguće pozivati komande dok su hintovi aktivni.");
-		return;
-	}
+	if(prikazPorukeHintoviAktivni(sudoku_tabela)) return;
 	
 	let t1 = prompt("Unesite polja (81 znak - prazna polja se predstavljaju nulom - razmaci su dozvoljeni)");
 	
@@ -67,7 +73,7 @@ function ucitavanjeZagonetkeHardcode(polje_zagonetka, sudoku_tabela) {
 }
 
 function ucitavanjeZagonetke(polje_zagonetka, sudoku_tabela) {
-	let podaci = localStorageCitanje(sudoku_tabela);
+	let podaci = localStorageCitanjeTabele(sudoku_tabela);
 
 	if(!podaci) {
 		ucitavanjeZagonetkeHardcode(polje_zagonetka, sudoku_tabela);
@@ -187,8 +193,8 @@ function rucniUpisTabele(sudoku_tabela) {
 	sudoku_tabela.rezimKreiranjaTabele = true;
 	let dugmeRucniUpis              = document.getElementById("dugme_upis_potvrda");
 	
-	dugmeRucniUpis.innerText        = "Potvrda nove tabele";
-	dugmeRucniUpis.style.background = "#9dc4f2";
+	dugmeRucniUpis.innerText        = "Potvrda nove tabele (w)";
+	dugmeRucniUpis.style.background = "#62cb96";
 	dugmeRucniUpis.style.color      = "#fff";
 	
 	let matricaPom = [ 0 ];
@@ -213,9 +219,9 @@ function potvrdaNoveTabele(sudoku_tabela) {
 	sudoku_tabela.rezimKreiranjaTabele = false;
 	let dugmeRucniUpis              = document.getElementById("dugme_upis_potvrda");
 	
-	dugmeRucniUpis.innerText        = "Ručni upis tabela";
-	dugmeRucniUpis.style.background = "#efefef";
-	dugmeRucniUpis.style.color      = "#000";
+	dugmeRucniUpis.innerText        = "Ručni upis tabele (w)";
+	dugmeRucniUpis.style.background = "#7096c3";
+	dugmeRucniUpis.style.color      = "#fff";
 
 	cuvanjeTabeleZagonetka(sudoku_tabela);
 
@@ -228,7 +234,7 @@ function potvrdaNoveTabele(sudoku_tabela) {
 	localStorageUpis(sudoku_tabela);	
 }
 
-function prebrojavanjePreostalih(sudoku_tabela) {
+function prebrojavanjePreostalih(sudoku_tabela, prikaz_poruke_reseno) {
 	/* ----- Telemetrija ---------------------------------------------------- */
 	// let t1 = performance.now();
 	/* ---------------------------------------------------------------------- */
@@ -249,9 +255,10 @@ function prebrojavanjePreostalih(sudoku_tabela) {
 		sudoku_tabela.imaLiGresaka = false;
 	}
 
-	document.getElementById('info_panel_broj_preostalih').innerHTML = `Broj preostalih: ${brojac}`;
+	let porukaJezik = (JEZIK_INTERFEJSA == 1)? `Broj preostalih:` : `Remaining cells:`;
+	document.getElementById('info_panel_broj_preostalih').innerHTML = `${porukaJezik} ${brojac}`;
 	sudoku_tabela.brojPreostalihPolja = brojac;
-	if(brojac == 0) proglasavanjeRezultata(sudoku_tabela);
+	if(brojac == 0) proglasavanjeRezultata(sudoku_tabela, prikaz_poruke_reseno);
 
 	/* ----- Telemetrija ---------------------------------------------------- */
 	// let t2    = performance.now();
@@ -260,7 +267,7 @@ function prebrojavanjePreostalih(sudoku_tabela) {
 	/* ---------------------------------------------------------------------- */
 }
 
-function proglasavanjeRezultata(sudoku_tabela) {
+function proglasavanjeRezultata(sudoku_tabela, prikaz_poruke_reseno) {
 	if(sudoku_tabela.brojPreostalihPolja > 0) return;
 		
 	if(sudoku_tabela.imaLiGresaka) {
@@ -268,7 +275,7 @@ function proglasavanjeRezultata(sudoku_tabela) {
 		return;
 	}
 	
-	if(!sudoku_tabela.cestitkaUpucena) {
+	if(!sudoku_tabela.cestitkaUpucena && prikaz_poruke_reseno) {
 		alert("Čestitamo, tabela je rešena!");
 		sudoku_tabela.cestitkaUpucena = true;
 	}
@@ -334,14 +341,27 @@ function skremblovanjeMatrice(sudoku_tabela) {
 	azuriranjePrikazaTabele(sudoku_tabela);
 }
 
-
 function generisanjeNoveZagonetke(tezina, sudoku_tabela) {
+	/* ----- Telemetrija ---------------------------------------------------- */
+	// let t1 = performance.now();
+	/* ---------------------------------------------------------------------- */
+
+	console.log(GENERATOR_API_URL)
+	console.log(ZAGONETKA_TEZINA)
+	
 	fetch(GENERATOR_API_URL)
 		.then(rez => rez.text())
 		.then(tabela => {
 			let t2 = preciscavanjeTekstaZagonekte(tabela);
 			ucitavanjeZagonetkeIzTeksta(t2, sudoku_tabela);
-			skremblovanjeMatrice(sudoku_tabela);
+			//skremblovanjeMatrice(sudoku_tabela);
 			//console.log(tabela);
+			
+			/* ----- Telemetrija ---------------------------------------------------- */
+			// let t3 = performance.now();
+			// let odziv = t3 - t1;
+			// console.log(`Fetch nova zagonetka: ${odziv}ms`);
+			/* ---------------------------------------------------------------------- */
 		});
+
 }
