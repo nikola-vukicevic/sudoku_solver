@@ -10,18 +10,21 @@ https://www.codeblog.rs/primeri/sudoku_solver/
 
 Za sada implementirane tehnike:
 
-- Ažuriranje kandidata (prosta eliminacija kandidata ukrštanjem reda, kolone i bloka)
+- ažuriranje kandidata (prosta eliminacija kandidata ukrštanjem reda, kolone i bloka)
 - jedini kandidat
 - skriveni singl
 - prepoznati par / triplet
 - upereni par
 - skriveni par
 - prisvajajući par / triplet
-- X-wing
-- XY-wing
-- Coloring
+- x-wing
+- xy-wing
+- coloring
  
 U planu:
 
-- Forcing chain
-- Nishio (???)
+- xyz-wing
+- wxyz-wing
+- xy-chain
+- x-cycles
+- alternating inference chains
