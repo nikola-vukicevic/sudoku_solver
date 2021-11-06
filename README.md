@@ -23,8 +23,8 @@ Za sada implementirane tehnike:
  
 U planu:
 
-- xyz-wing
-- wxyz-wing
-- xy-chain
-- x-cycles
-- alternating inference chains
+- xyz-wing (proširenje xy-wing koncepta, ne mnogo komplikovanije)
+- wxyz-wing (proširenje xy-wing koncepta, ne mnogo komplikovanije)
+- xy-chain (proširenje xy-wing koncepta, ne mnogo komplikovanije)
+- x-cycles (proširenje coloring koncepta, ne previše komplikovanije)
+- alternating inference chains (proširenje i objedinjavanje coloring i x-cycles koncepata, ponešto komplikovanije)
