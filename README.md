@@ -20,7 +20,7 @@ Za sada implementirane tehnike:
 - x-wing
 - xy-wing
 - coloring
-- x-cycles (proširenje coloring koncepta, ne previše komplikovanije)
+- x-cycles (za sada još uvek ima sitnih bagova koji ne utiču na korektnost rezultata)
 
 U planu:
 
