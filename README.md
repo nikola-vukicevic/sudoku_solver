@@ -18,12 +18,12 @@ Za sada implementirane tehnike:
 - prisvajajući par / triplet
 - x-wing
 - xy-wing
+- xyz-wing
 - coloring
 - x-cycles
 
 U planu:
 
-- xyz-wing (proširenje xy-wing koncepta, ne mnogo komplikovanije) - WIP 
 - wxyz-wing (proširenje xy-wing koncepta, ne mnogo komplikovanije)
 - xy-chain (proširenje xy-wing koncepta, ne mnogo komplikovanije)
 - alternating inference chains (proširenje i objedinjavanje coloring i x-cycles koncepata, ponešto komplikovanije)
