@@ -12,7 +12,7 @@ Za sada implementirane tehnike:
 
 - ažuriranje kandidata (prosta eliminacija kandidata ukrštanjem reda, kolone i bloka)
 - jedini kandidat
-- skriveni singl / par / triplet
+- skriveni singl / par / triplet / kvartet
 - prepoznati par / triplet / kvartet
 - upereni par / triplet
 - prisvajajući par / triplet
