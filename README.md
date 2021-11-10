@@ -27,4 +27,6 @@ U planu:
 
 - xy-chain (proširenje xy-wing koncepta, ne mnogo komplikovanije)
 - alternating inference chains (proširenje i objedinjavanje coloring i x-cycles koncepata, ponešto komplikovanije)
+- unique rectangles
+- forcing chains
 - verovatno i sve ostalo što stignem :)
