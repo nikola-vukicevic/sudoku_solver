@@ -4,7 +4,7 @@ Sudoku solver koji traži rešenje korak po korak (WIP; za sada još uvek mestim
 
 ## Demo
 
-https://www.codeblog.rs/primeri/sudoku_solver/
+https://www.sudokublog.net
 
 ## Info
 
